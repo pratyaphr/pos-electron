@@ -31,6 +31,8 @@ class BackupService {
 
     const destination = path.join(backupFolder, "pos-backup.db");
 
+    console.log("Back up Dir :", destination);
+
     db.pragma("wal_checkpoint(FULL)");
 
     fs.copyFileSync(dbPath, destination);
