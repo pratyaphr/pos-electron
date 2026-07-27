@@ -1,0 +1,43 @@
+appId: com.mypos.pos
+
+productName: MyPOS
+
+directories:
+  output: release
+
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+
+extraResources:
+  - from: electron/database/migrations
+    to: database/migrations
+
+asar: true
+
+npmRebuild: false
+
+buildDependenciesFromSource: true
+
+asarUnpack:
+  - "**/*.node"
+
+win:
+  target:
+    - nsis
+
+  icon: build/icon.ico
+
+nsis:
+  oneClick: false
+
+  allowToChangeInstallationDirectory: true
+
+  createDesktopShortcut: true
+
+  createStartMenuShortcut: true
+
+  deleteAppDataOnUninstall: false
+
+compression: maximum
