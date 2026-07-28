@@ -53,7 +53,7 @@ const SalePage = () => {
             </div>
           </div>
           {isLoading ? (
-            <div className="flex-1 p-6 overflow-y-auto grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4 content-start">
+            <div className="flex-1 p-6 overflow-y-auto grid grid-cols-4 xs:grid-cols-2  md:grid-cols-3 xl:grid-cols-5 gap-4 content-start">
               {Array.from({ length: 8 }).map((_, index) => (
                 <div
                   key={index}
@@ -70,7 +70,7 @@ const SalePage = () => {
               ))}
             </div>
           ) : data?.data && data?.data?.length > 0 ? (
-            <div className="flex p-6 overflow-y-auto grid grid-cols-4 gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4  content-start">
+            <div className="flex p-6 overflow-y-auto grid grid-cols-4 gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 content-start">
               {data?.data?.map((p: Product) => (
                 <ProductCard
                   key={p?.barcode}

@@ -4,9 +4,12 @@ import { ScannerEngine } from "../core/scanner";
 import { inputModeManager } from "../core/input";
 import { getProductByBarcode } from "../api/products";
 import { useCartStore } from "../stores";
+import { useToastStore } from "../stores/toast.store";
 
 export default function KeyboardManager() {
   const { setItems } = useCartStore();
+  const toast = useToastStore();
+
   const scanner = useMemo(
     () =>
       new ScannerEngine({
@@ -17,6 +20,8 @@ export default function KeyboardManager() {
             console.log(product);
             if (product.success) {
               setItems(product.data);
+            } else {
+              toast.show("เกิดข้อผิดพลาด", `${product.message} `, "error");
             }
           } catch (err) {
             console.error(err);
