@@ -3,6 +3,7 @@ import BarcodePrintQueue from "../components/BarcodePrintQueue";
 import { useSearchProduct } from "../hooks/useSearchProduct";
 import SelectTable from "../components/SelectTable";
 import { useBarcodePrintStore } from "../stores";
+import { Printer } from "lucide-react";
 
 const BarCodePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,10 +40,21 @@ const BarCodePage = () => {
               value={searchTerm}
               onChange={(e) => onSearch(e.target.value as string)}
             />
-            <SelectTable
-              data={data?.data ?? []}
-              disabledIds={items.map((v) => v.productId)}
-            />
+            {data?.data && data?.data?.length > 0 ? (
+              <SelectTable
+                data={data?.data ?? []}
+                disabledIds={items.map((v) => v.productId)}
+              />
+            ) : (
+              <div className="h-1/2 flex flex-col items-center justify-center text-slate-300 py-12">
+                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+                  <Printer size={36} strokeWidth={1.5} />
+                </div>
+                <p className="font-bold text-slate-400 text-sm">
+                  ไม่มีรายการสินค้า
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

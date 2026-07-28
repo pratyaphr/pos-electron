@@ -38,13 +38,21 @@ export default function BarcodePrintQueue() {
 
   return (
     <div className="bg-white  shadow p-4 w-full">
-      <p className="font-bold text-lg mb-4 text-slate-400 uppercase tracking-widest">
+      <p className="font-bold border-b border-gray-300/40 h-[3rem] text-lg mb-4 text-slate-400 uppercase tracking-widest">
         รายการที่ต้องการพิมพ์
       </p>
 
       <div className="space-y-3 h-[75%] overflow-auto">
         {items.length === 0 && (
-          <div className="text-center text-gray-400 py-10">ไม่มีรายการ</div>
+          <div className="h-full flex flex-col items-center justify-center text-slate-300 py-12">
+            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+              <Printer size={36} strokeWidth={1.5} />
+            </div>
+            <p className="font-bold text-slate-400 text-sm">ยังไม่มีรายการ</p>
+            <p className="text-xs text-slate-300 mt-1">
+              กดเลือกรายการด้านซ้ายเพื่อพิมพ์
+            </p>
+          </div>
         )}
 
         {items.map((item) => (
