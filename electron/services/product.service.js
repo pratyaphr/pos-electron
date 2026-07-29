@@ -41,9 +41,11 @@ class ProductService {
     }
   }
 
-  async search(keyword) {
+  async search(keyword, categoryId) {
+    console.log("service search", keyword, categoryId);
+
     try {
-      const products = repository.search(keyword);
+      const products = repository.search(keyword, categoryId);
 
       return response.success(products);
     } catch (err) {

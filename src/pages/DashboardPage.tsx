@@ -12,6 +12,7 @@ import { SalesGraph } from "../components/SalesGraph";
 import ErrorContent from "../components/ErrorContent";
 import type { Column } from "../types";
 import TableCustom from "../components/TableCustom";
+import NoDataContent from "../components/NoDataContent";
 
 const DashboardPage = () => {
   const { data, isError } = useDashboard();
@@ -117,29 +118,33 @@ const DashboardPage = () => {
                 </div>
 
                 <div className="flex-1 space-y-3 overflow-y-auto pr-2 custom-scrollbar">
-                  {data?.topProducts?.map((item: any, idx: number) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-default"
-                    >
+                  {data?.topProducts && data?.topProducts?.length > 0 ? (
+                    data?.topProducts?.map((item: any, idx: number) => (
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm bg-yellow-100 text-yellow-700`}
+                        key={idx}
+                        className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-2xl transition-colors cursor-default"
                       >
-                        {idx + 1}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-sm font-bold text-slate-700 line-clamp-1">
-                          {item?.name ?? "-"}
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm bg-yellow-100 text-yellow-700`}
+                        >
+                          {idx + 1}
                         </div>
-                        {/* <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+                        <div className="flex-1">
+                          <div className="text-sm font-bold text-slate-700 line-clamp-1">
+                            {item?.name ?? "-"}
+                          </div>
+                          {/* <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
                           {item?.quantity ?? 0}
                         </div> */}
+                        </div>
+                        <div className="text-right text-xs font-black text-slate-900">
+                          {item?.qty ?? 0}
+                        </div>
                       </div>
-                      <div className="text-right text-xs font-black text-slate-900">
-                        {item?.qty ?? 0}
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <NoDataContent bg={false} border={false} />
+                  )}
                 </div>
               </div>
             </div>

@@ -16,7 +16,10 @@ declare global {
         getAll(): Promise<ApiResponse<Product[]>>;
         getById(id: string): Promise<ApiResponse<Product>>;
         getByBarcode(id: string): Promise<ApiResponse<Product>>;
-        search(keyword: string): Promise<ApiResponse<Product[]>>;
+        search(
+          keyword: string,
+          categoryId?: number | null,
+        ): Promise<ApiResponse<Product[]>>;
         create(data: any): Promise<ApiResponse<Product>>;
         update(data: CreateProductDto): Promise<ApiResponse<Product>>;
         delete(id: number): Promise<ApiResponse<any>>;

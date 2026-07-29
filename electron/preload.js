@@ -6,7 +6,8 @@ contextBridge.exposeInMainWorld("api", {
 
     getById: (id) => ipcRenderer.invoke("products:getById", id),
 
-    search: (keyword) => ipcRenderer.invoke("products:search", keyword),
+    search: (keyword, categoryId) =>
+      ipcRenderer.invoke("products:search", keyword, categoryId),
 
     create: (data) => {
       console.log("Preload", data);

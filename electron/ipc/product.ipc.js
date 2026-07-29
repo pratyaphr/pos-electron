@@ -19,8 +19,8 @@ function registerProductIPC() {
     return productService.getByBarcode(id);
   });
 
-  ipcMain.handle("products:search", (_, keyword) => {
-    return productService.search(keyword);
+  ipcMain.handle("products:search", (_, keyword, categoryId) => {
+    return productService.search(keyword, categoryId);
   });
 
   ipcMain.handle("products:create", (_, data) => {

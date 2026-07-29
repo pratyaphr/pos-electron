@@ -5,15 +5,21 @@ interface NoDataProps {
   title?: string;
   icon?: ReactNode;
   action?: ReactNode;
+  border?: boolean;
+  bg?: boolean;
 }
 
 export default function NoDataContent({
   title = "ไม่มีข้อมูล",
   icon,
   action,
+  border = true,
+  bg = true,
 }: NoDataProps) {
   return (
-    <div className="flex w-full flex-col items-center justify-center  border border-dashed border-slate-300 bg-slate-50 px-8 py-14">
+    <div
+      className={`flex w-full flex-col items-center justify-center  ${border ? "border border-dashed border-slate-300" : ""} ${bg ? "bg-slate-50" : ""} px-8 py-14`}
+    >
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm text-slate-400">
         {icon ?? <WalletCards size={34} />}
       </div>

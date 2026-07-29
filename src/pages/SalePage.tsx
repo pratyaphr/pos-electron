@@ -6,14 +6,22 @@ import { useCartStore } from "../stores";
 import type { Product } from "../types";
 import { Search, ShoppingCart } from "lucide-react";
 import { inputModeManager } from "../core/input";
+import { useGetCategories } from "../hooks/useGetCategories";
 
 const SalePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [keyword, setKeyword] = useState("");
   const { items, setItems, updateQty, changeQty, clearCart, DeleteItemCart } =
     useCartStore();
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  const { data, isLoading } = useSearchProduct(keyword);
+  const { data: categories } = useGetCategories();
+
+  const cate = categories?.data
+    ? [{ id: null, name: "ทั้งหมด" }, ...categories?.data]
+    : [];
+
+  const { data, isLoading } = useSearchProduct(keyword, selectedCategory);
 
   const onSearch = (text: string) => {
     setSearchTerm(text);
@@ -52,6 +60,23 @@ const SalePage = () => {
               />
             </div>
           </div>
+
+          <div className="flex w-[95%] px-4 gap-2 overflow-x-auto overflow-y-hidden ">
+            {cate?.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`w-[5rem] h-[2rem] my-3 cursor-pointer rounded-xl text-xs font-black transition-all whitespace-nowrap active:scale-95 ${
+                  selectedCategory === cat.id
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-100 scale-105"
+                    : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                {cat?.name}
+              </button>
+            ))}
+          </div>
+
           {isLoading ? (
             <div className="flex-1 p-6 overflow-y-auto grid grid-cols-4 xs:grid-cols-2  md:grid-cols-3 xl:grid-cols-5 gap-4 content-start">
               {Array.from({ length: 8 }).map((_, index) => (
@@ -70,7 +95,7 @@ const SalePage = () => {
               ))}
             </div>
           ) : data?.data && data?.data?.length > 0 ? (
-            <div className="flex p-6 overflow-y-auto grid grid-cols-4 gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 content-start">
+            <div className="flex p-3 overflow-y-auto grid grid-cols-4 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 content-start">
               {data?.data?.map((p: Product) => (
                 <ProductCard
                   key={p?.barcode}

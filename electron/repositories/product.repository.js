@@ -55,24 +55,35 @@ class ProductRepository extends BaseRepository {
     );
   }
 
-  search(keyword) {
-    return this.all(
-      `
-      SELECT
+  search(keyword, categoryId = null) {
+    const params = [`%${keyword}%`, `%${keyword}%`];
+    console.log("repo search", keyword, categoryId);
+
+    let sql = `
+    SELECT
       p.*,
       c.name AS category_name
     FROM products p
     LEFT JOIN categories c
       ON p.category_id = c.id
-    WHERE p.active = 1
+    WHERE
+      p.active = 1
       AND (
         p.barcode LIKE ?
         OR p.name LIKE ?
       )
-    ORDER BY p.name
-      `,
-      [`%${keyword}%`, `%${keyword}%`],
-    );
+  `;
+
+    if (categoryId !== null) {
+      sql += ` AND p.category_id = ?`;
+      params.push(categoryId);
+    }
+
+    sql += `
+    ORDER BY p.created_at
+  `;
+
+    return this.all(sql, params);
   }
 
   list({ page = 1, pageSize = 10, keyword = "" }) {
