@@ -184,7 +184,6 @@ export default function InventoryPage() {
   };
 
   const onDisable = () => {
-    console.log("onDisable", disableCurren);
     if (disableCurren) {
       disable(disableCurren);
     }

@@ -40,6 +40,8 @@ const CartSidebar = ({
 
   const onSuccess = () => {
     clearCart();
+    document.body.tabIndex = -1;
+    document.body.focus();
   };
   const { mutate } = useCreateReceipt({ onSuccess });
   // const { handleCheckout, items } = useCartStore();
