@@ -25,11 +25,11 @@ class ReceiptService {
           const product = productRepository.findById(item.product_id);
 
           if (!product) {
-            throw new Error(`Product ${item.product_id} not found`);
+            throw new Error(`ไม่พบสินค้า${item.product_id}`);
           }
 
           if (product.stock_qty < item.quantity) {
-            throw new Error(`${product.name} stock not enough`);
+            throw new Error(`สินค้า ${product.name} ในสต๊อกไม่เพียงพอ`);
           }
 
           const subtotal = product.price * item.quantity;
