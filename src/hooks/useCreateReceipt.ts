@@ -28,5 +28,9 @@ export function useCreateReceipt({ onSuccess }: useCreateReceiptProps) {
       // navigate(`/receipt/${receipt.id}`);
       onSuccess?.();
     },
+    onError: (err) => {
+      console.log("err", err);
+      toast.show("เกิดข้อผิดพลาด", `${err}`, "error");
+    },
   });
 }
