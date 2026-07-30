@@ -13,6 +13,7 @@ import { useDisableProduct } from "../hooks/useDisableProduct";
 import ExportSelector from "../components/ExportSelector";
 import { useNavigate } from "react-router-dom";
 import { useCreateCategorie } from "../hooks/useCreateCategorie";
+import { inputModeManager } from "../core/input";
 
 export default function InventoryPage() {
   const navigate = useNavigate();
@@ -274,6 +275,12 @@ export default function InventoryPage() {
                   type="text"
                   placeholder="เช่น 8850123456789"
                   required
+                  onFocus={() => {
+                    inputModeManager.setMode("DIALOG");
+                  }}
+                  onBlur={() => {
+                    inputModeManager.setMode("BARCODE");
+                  }}
                   value={formData.barcode}
                   autoFocus
                   onChange={(e) =>

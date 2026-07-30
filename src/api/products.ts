@@ -20,8 +20,6 @@ export function getProductByBarcode(id: string) {
 }
 
 export function searchProducts(keyword: string, categoryId?: number | null) {
-  console.log("searchProducts", keyword, categoryId);
-
   return window.api.products.search(keyword, categoryId) as Promise<
     ApiResponse<Product[]>
   >;

@@ -57,7 +57,6 @@ class ProductRepository extends BaseRepository {
 
   search(keyword, categoryId = null) {
     const params = [`%${keyword}%`, `%${keyword}%`];
-    console.log("repo search", keyword, categoryId);
 
     let sql = `
     SELECT

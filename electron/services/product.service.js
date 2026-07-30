@@ -42,8 +42,6 @@ class ProductService {
   }
 
   async search(keyword, categoryId) {
-    console.log("service search", keyword, categoryId);
-
     try {
       const products = repository.search(keyword, categoryId);
 
