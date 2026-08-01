@@ -88,7 +88,14 @@ class ProductRepository extends BaseRepository {
   list({ page = 1, pageSize = 10, keyword = "" }) {
     const offset = (page - 1) * pageSize;
 
-    const where = keyword ? "WHERE name LIKE ? OR barcode LIKE ?" : "";
+    const where = keyword
+      ? `
+      WHERE (
+        p.name LIKE ?
+        OR p.barcode LIKE ?
+      )
+    `
+      : "";
 
     const params = keyword
       ? [`%${keyword}%`, `%${keyword}%`, pageSize, offset]
@@ -97,17 +104,17 @@ class ProductRepository extends BaseRepository {
     const items = db
       .prepare(
         `
-        SELECT
-      p.*,
-      c.name AS category_name
-    FROM products p
-    LEFT JOIN categories c
-      ON p.category_id = c.id
-        ${where}
-        ORDER BY active ASC, id DESC
-        LIMIT ?
-        OFFSET ?
-    `,
+      SELECT
+        p.*,
+        c.name AS category_name
+      FROM products p
+      LEFT JOIN categories c
+        ON p.category_id = c.id
+      ${where}
+      ORDER BY p.active ASC, p.id DESC
+      LIMIT ?
+      OFFSET ?
+      `,
       )
       .all(...params);
 
@@ -116,10 +123,10 @@ class ProductRepository extends BaseRepository {
     const total = db
       .prepare(
         `
-        SELECT COUNT(*) total
-        FROM products
-        ${where}
-    `,
+      SELECT COUNT(*) AS total
+      FROM products p
+      ${where}
+      `,
       )
       .get(...countParams).total;
 
