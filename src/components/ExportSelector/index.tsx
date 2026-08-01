@@ -62,8 +62,6 @@ export default function ExportSelector() {
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="flex cursor-pointer items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 active:scale-95 transition-all"
-
-        // className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 shadow-sm"
       >
         <span>Export</span>
 
@@ -71,7 +69,7 @@ export default function ExportSelector() {
       </button>
 
       {open && (
-        <div className="absolute left-0 right-0 mt-2 max-h-80 overflow-auto rounded-lg border bg-white shadow-lg z-50 w-[130px]">
+        <div className="absolute left-0 right-0 mt-2 max-h-80 overflow-auto rounded-lg border border-slate-200 bg-white shadow-lg z-50 w-[150px] ">
           {treeData.map((item) => (
             <TreeItem
               key={item.id}

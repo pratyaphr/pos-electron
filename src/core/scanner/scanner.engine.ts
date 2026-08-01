@@ -1,24 +1,5 @@
+import { normalizeBarcode } from "../../hooks/useNormalizeBarcode";
 import type { ScannerOptions } from "./scanner.types";
-
-const thaiMap: Record<string, string> = {
-  ๅ: "1",
-  "/": "2",
-  "-": "3",
-  ภ: "4",
-  ถ: "5",
-  "ุ": "6",
-  "ึ": "7",
-  ค: "8",
-  ต: "9",
-  จ: "0",
-};
-
-function normalizeBarcode(value: string) {
-  return value
-    .split("")
-    .map((char) => thaiMap[char] ?? char)
-    .join("");
-}
 
 export class ScannerEngine {
   private buffer = "";

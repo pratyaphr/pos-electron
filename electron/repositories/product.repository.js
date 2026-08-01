@@ -97,8 +97,12 @@ class ProductRepository extends BaseRepository {
     const items = db
       .prepare(
         `
-        SELECT *
-        FROM products
+        SELECT
+      p.*,
+      c.name AS category_name
+    FROM products p
+    LEFT JOIN categories c
+      ON p.category_id = c.id
         ${where}
         ORDER BY active ASC, id DESC
         LIMIT ?
@@ -208,7 +212,7 @@ class ProductRepository extends BaseRepository {
 
     sql += `
 
-        ORDER BY p.created_at ${sortCreatedAt}
+        ORDER BY p.category_id ASC,p.created_at ${sortCreatedAt}
 
     `;
 

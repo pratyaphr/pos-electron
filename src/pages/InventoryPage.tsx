@@ -14,6 +14,8 @@ import ExportSelector from "../components/ExportSelector";
 import { useNavigate } from "react-router-dom";
 import { useCreateCategorie } from "../hooks/useCreateCategorie";
 import { inputModeManager } from "../core/input";
+import { formatNumber, truncateText } from "../hooks/useFormatLabel";
+import { normalizeBarcode } from "../hooks/useNormalizeBarcode";
 
 export default function InventoryPage() {
   const navigate = useNavigate();
@@ -83,17 +85,25 @@ export default function InventoryPage() {
     {
       title: "ชื่อสินค้า",
       key: "name",
+      render: (_, record) => truncateText(record?.name),
+    },
+    {
+      title: "หมวดหมู่",
+      key: "category_name",
+      render: (_, record) => truncateText(record?.category_name ?? ""),
     },
     {
       title: "ราคา",
       key: "price",
+      render: (_, record) => formatNumber(record?.price),
     },
     {
       title: "สต็อก",
       key: "stock_qty",
+      render: (_, record) => formatNumber(record?.stock_qty),
     },
     {
-      title: "Active",
+      title: "สถานะ",
       key: "active",
       render: (_, record) => (record.active === 1 ? "ใช้งาน" : "ไม่ได้ใช้งาน"),
     },
@@ -282,9 +292,13 @@ export default function InventoryPage() {
                   }}
                   value={formData.barcode}
                   autoFocus
-                  onChange={(e) =>
-                    setFormData({ ...formData, barcode: e.target.value })
-                  }
+                  onChange={(e) => {
+                    const normalCode = normalizeBarcode(e.target.value);
+                    setFormData({
+                      ...formData,
+                      barcode: normalCode ?? e.target.value,
+                    });
+                  }}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-slate-700"
                 />
               </div>

@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import type { Product } from "../types";
+import { formatNumber, truncateText } from "../hooks/useFormatLabel";
 
 const ProductCard: React.FC<{
   product: Product;
@@ -22,17 +23,17 @@ const ProductCard: React.FC<{
       >
         {product?.stock_qty <= 10
           ? "สินค้าใกล้หมด"
-          : `คงเหลือ ${product.stock_qty}`}
+          : `คงเหลือ ${product.stock_qty ? formatNumber(product?.stock_qty) : 0}`}
       </span>
     </div>
     <div className="my-1">
-      <h3 className="font-bold text-slate-800 text-sm line-clamp-2 leading-snug mt-0.5 group-hover:text-blue-600 transition-colors">
-        {product?.name ?? "-"}
+      <h3 className="font-bold text-slate-800 text-sm line-clamp-2 leading-snug mt-0.5 group-hover:text-blue-600 transition-colors truncate">
+        {product?.name ? truncateText(product?.name) : "-"}
       </h3>
     </div>
     <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
       <span className="text-lg font-black text-slate-900">
-        ฿{product?.price ?? 0}
+        ฿{product?.price ? formatNumber(product?.price) : 0}
       </span>
       <button
         disabled={product?.stock_qty <= 0}

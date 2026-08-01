@@ -1,6 +1,10 @@
 const { generateBarcode } = require("../utils/barcode");
 
-const { money, formatDateTime } = require("../utils/format");
+const {
+  formatDateTime,
+  truncateText,
+  formatNumber,
+} = require("../utils/format");
 
 module.exports = function productPage(products, page, totalPage) {
   const totalStock = products.reduce((sum, item) => sum + item.stock_qty, 0);
@@ -26,7 +30,7 @@ src="${generateBarcode(item.barcode)}"
 
 <td>
 
-${item.name}
+${truncateText(item.name)}
 
 </td>
 
@@ -38,13 +42,13 @@ ${item.category ?? "-"}
 
 <td class="right">
 
-${money(item.price)}
+${formatNumber(item.price)}
 
 </td>
 
 <td class="right">
 
-${item.stock_qty}
+${formatNumber(item.stock_qty)}
 
 </td>
 
@@ -79,7 +83,7 @@ ${formatDateTime()}
 
 Items :
 
-${products.length}
+${formatNumber(products.length)}
 
 </div>
 
@@ -87,7 +91,7 @@ ${products.length}
 
 Stock :
 
-${totalStock}
+${formatNumber(totalStock)}
 
 </div>
 
